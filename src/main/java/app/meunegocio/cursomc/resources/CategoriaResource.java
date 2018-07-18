@@ -15,11 +15,11 @@ import app.meunegocio.cursomc.services.CategoriaService;
 public class CategoriaResource {
 
 	@Autowired
-	CategoriaService service;
+	CategoriaService categoriaService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Categoria obj = service.buscar(id);
+		Categoria obj = categoriaService.buscar(id);
 		return ResponseEntity.ok(obj);
 	}
 
