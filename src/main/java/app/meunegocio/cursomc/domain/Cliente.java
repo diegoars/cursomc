@@ -22,9 +22,9 @@ import app.meunegocio.cursomc.domain.enums.TipoCliente;
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 5122274665888897047L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String email;
@@ -32,12 +32,15 @@ public class Cliente implements Serializable {
 	private Integer tipoCliente; // armazena o inteiro no banco
 
 	@JsonManagedReference
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 	@ElementCollection
-	@CollectionTable(name="telefone")
+	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();// tipo Set é uma coleção que não aceita repetição
+
+	@OneToMany(mappedBy = "cliente") // nome do atributo na classe Pedido
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Cliente() {
 
@@ -106,6 +109,14 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
