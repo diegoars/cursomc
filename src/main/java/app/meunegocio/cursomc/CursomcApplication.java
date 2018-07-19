@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import app.meunegocio.cursomc.domain.Categoria;
 import app.meunegocio.cursomc.domain.Cidade;
+import app.meunegocio.cursomc.domain.Cliente;
+import app.meunegocio.cursomc.domain.Endereco;
 import app.meunegocio.cursomc.domain.Estado;
 import app.meunegocio.cursomc.domain.Produto;
+import app.meunegocio.cursomc.domain.enums.TipoCliente;
 import app.meunegocio.cursomc.repositories.CategoriaRepository;
 import app.meunegocio.cursomc.repositories.CidadeRepository;
+import app.meunegocio.cursomc.repositories.ClienteRepository;
+import app.meunegocio.cursomc.repositories.EnderecoRepository;
 import app.meunegocio.cursomc.repositories.EstadoRepository;
 import app.meunegocio.cursomc.repositories.ProdutoRepository;
 
@@ -20,16 +25,22 @@ import app.meunegocio.cursomc.repositories.ProdutoRepository;
 public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
-	CategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository;
 
 	@Autowired
-	ProdutoRepository produtoRepository;
+	private ProdutoRepository produtoRepository;
 
 	@Autowired
-	EstadoRepository estadoRepository;
+	private EstadoRepository estadoRepository;
 
 	@Autowired
-	CidadeRepository cidadeRepository;
+	private CidadeRepository cidadeRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -67,6 +78,18 @@ public class CursomcApplication implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "10091806678", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("38316958", "956865242"));
+
+		Endereco e1 = new Endereco(null, "Rua Chile", "245", "Esquina do beco", "Tibery", "38408208", cli1, c1);
+		Endereco e2 = new Endereco(null, "Rua Patagonia", "235", "casa de grade", "Custódio Pereira", "38408208", cli1,
+				c2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
 	}
 }
