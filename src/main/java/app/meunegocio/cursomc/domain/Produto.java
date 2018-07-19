@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,7 +29,8 @@ public class Produto implements Serializable {
 
 	// produto_categoria é a intertable entre produto e categoria pois a relação é
 	// M:M
-	@JsonBackReference // omite a lista de categorias pra cada produto. Evita referencia cíclica
+//	@JsonBackReference // omite a lista de categorias pra cada produto. Evita referencia cíclica
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), // chave desta entidade na
 																							// intertable

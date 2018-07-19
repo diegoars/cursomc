@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Categoria implements Serializable {
 
@@ -22,7 +20,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference //quero que apareça a lista de produtos quando acessar a rota categorias
+	//@JsonManagedReference //quero que apareça a lista de produtos quando acessar a rota categorias
 	@ManyToMany(mappedBy="categorias") //categorias é o nome do atributo de mesmo nome que está na classe Produto
 	private List<Produto> produtos = new ArrayList<Produto>();
 
